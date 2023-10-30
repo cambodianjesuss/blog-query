@@ -5,7 +5,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/events', (req, res)=>{
-  console.log(req.body)
+  console.log(req.body.type)
 });
 
 app.listen(4002, ()=>{
