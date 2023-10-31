@@ -14,36 +14,32 @@ app.use(cors());
  * Data Shape
  * postId: {
  *  id: postId,
- * title: 'post title'
- * comments: [
+ *  title: 'post title'
+ *  comments: [
  *    { id: commentId, content: 'comment!'}
  *  ]
  * }
  */
-const posts = {
-  'jfdie344test': {
-    id: 'jfdie344test',
-    title: 'This is a test of the query service response',
-    comments: [
-      {
-        id: 'commentIdtest123',
-        content: 'This is a test comment for query'
-      },
-      {
-        id: 'commentIdtest456',
-        content: 'Another test comment for query'
-      }
-    ]
-  }
-}
+const posts = {}
 
 app.get('/posts', (req, res)=>{
   res.send(posts);
 })
 
 app.post('/events', (req, res)=>{
-  console.log("Event Type Recieved in Query:", req.body.type);
-  res.send({Status: "OK"});
+  const { type, data } = req.body;
+
+  if(type === "PostCreated"){
+    const { id, title } = data;
+    posts[id] = {id, title, comments: []};
+  }
+
+  if(type === "CommentCreated"){
+    const {id, content, postId} = data;
+
+    const post = posts[postId];
+    post.comments.push({id, content});
+  }
 });
 
 app.listen(4002, ()=>{
