@@ -10,16 +10,6 @@ app.use(cors());
  * Object that recieves an event, then stores it data to send only one request
  */
 
-/**
- * Data Shape
- * postId: {
- *  id: postId,
- *  title: 'post title'
- *  comments: [
- *    { id: commentId, content: 'comment!'}
- *  ]
- * }
- */
 const posts = {}
 
 app.get('/posts', (req, res)=>{
