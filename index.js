@@ -6,10 +6,6 @@ const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
 
-/**
- * Object that recieves an event, then stores it data to send only one request
- */
-
 const posts = {}
 
 app.get('/posts', (req, res)=>{
