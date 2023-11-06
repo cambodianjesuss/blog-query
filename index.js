@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 const app = express();
 const cors = require('cors');
 
@@ -49,7 +50,7 @@ app.listen(4002, async ()=>{
   console.log('Query Service on 4002');
 
   // When app running, GET EVENTS
-  const res = await app.get('http://localhost:4005/events');
+  const res = await axios.get('http://localhost:4005/events');
 
   for(let event of res.data){
     console.log('Processing event:', event.type);
