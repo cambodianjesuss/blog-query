@@ -12,6 +12,7 @@ const posts = {}
 const handleEvent = (type, data)=>{
   if(type === "PostCreated"){
     const { id, title } = data;
+
     posts[id] = {id, title, comments: []};
   }
 
@@ -49,12 +50,15 @@ app.post('/events', (req, res)=>{
 app.listen(4002, async ()=>{
   console.log('Query Service on 4002');
 
-  // When app running, GET EVENTS
-  const res = await axios.get('http://localhost:4005/events');
+  try {
+    const res = await axios.get("http://localhost:4005/events");
 
-  for(let event of res.data){
-    console.log('Processing event:', event.type);
+    for (let event of res.data) {
+      console.log("Processing event:", event.type);
 
-    handleEvent(event.type, event.data);
-  }
+      handleEvent(event.type, event.data);
+    }
+  } catch (error) {
+    console.log(error.message);
+  }  
 });
